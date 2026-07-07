@@ -8,6 +8,7 @@ type ClientListProps = {
   filterStatus: FilterStatus;
   onFilterStatusChange: (status: FilterStatus) => void;
   onDeleteClient: (clientId: string) => void;
+  onEditClient: (client: Client) => void;
 };
 
 export function ClientList({
@@ -15,6 +16,7 @@ export function ClientList({
   filterStatus,
   onFilterStatusChange,
   onDeleteClient,
+  onEditClient,
 }: ClientListProps) {
   return (
     <section>
@@ -42,6 +44,7 @@ export function ClientList({
             key={client.id}
             client={client}
             onDeleteClient={onDeleteClient}
+            onEditClient={onEditClient}
           />
         ))}
       </div>

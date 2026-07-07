@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Client, ClientStatus } from "../types/client";
 
 type ClientFormProps = {
   onAddClient: (client: Client) => void;
+  editingClient: Client | null;
+  onUpdateClient: (client: Client) => void;
+  onCancelEdit: () => void;
 };
 
 const initialFormData = {
@@ -16,11 +19,49 @@ const initialFormData = {
   notes: "",
 };
 
-export function ClientForm({ onAddClient }: ClientFormProps) {
+export function ClientForm({
+  onAddClient,
+  editingClient,
+  onUpdateClient,
+  onCancelEdit,
+}: ClientFormProps) {
   const [formData, setFormData] = useState(initialFormData);
+
+  useEffect(() => {
+    if (editingClient) {
+      setFormData({
+        companyName: editingClient.companyName,
+        contactName: editingClient.contactName,
+        email: editingClient.email,
+        phone: editingClient.phone,
+        status: editingClient.status,
+        monthlyValue: String(editingClient.monthlyValue),
+        nextFollowUpDate: editingClient.nextFollowUpDate,
+        notes: editingClient.notes,
+      });
+    }
+  }, [editingClient]);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (editingClient) {
+      const updatedClient: Client = {
+        ...editingClient,
+        companyName: formData.companyName,
+        contactName: formData.contactName,
+        email: formData.email,
+        phone: formData.phone,
+        status: formData.status,
+        monthlyValue: Number(formData.monthlyValue),
+        nextFollowUpDate: formData.nextFollowUpDate,
+        notes: formData.notes,
+      };
+
+      onUpdateClient(updatedClient);
+      setFormData(initialFormData);
+      return;
+    }
 
     const newClient: Client = {
       id: crypto.randomUUID(),
@@ -39,9 +80,14 @@ export function ClientForm({ onAddClient }: ClientFormProps) {
     setFormData(initialFormData);
   }
 
+  function handleCancelEdit() {
+    onCancelEdit();
+    setFormData(initialFormData);
+  }
+
   return (
     <section className="form-section">
-      <h2>Add New Client</h2>
+      <h2>{editingClient ? "Edit Client" : "Add New Client"}</h2>
 
       <form className="client-form" onSubmit={handleSubmit}>
         <input
@@ -124,7 +170,19 @@ export function ClientForm({ onAddClient }: ClientFormProps) {
           }
         />
 
-        <button type="submit">Add Client</button>
+        <button type="submit">
+          {editingClient ? "Save Changes" : "Add Client"}
+        </button>
+
+        {editingClient && (
+          <button
+            className="cancel-button"
+            type="button"
+            onClick={handleCancelEdit}
+          >
+            Cancel Edit
+          </button>
+        )}
       </form>
     </section>
   );

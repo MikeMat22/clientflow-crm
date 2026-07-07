@@ -21,6 +21,7 @@ function App() {
   });
 
   const [filterStatus, setFilterStatus] = useState<FilterStatus>("all");
+  const [editingClient, setEditingClient] = useState<Client | null>(null);
 
   const filteredClients =
     filterStatus === "all"
@@ -39,6 +40,29 @@ function App() {
     setClients((currentClients) =>
       currentClients.filter((client) => client.id !== clientId)
     );
+
+    if (editingClient?.id === clientId) {
+      setEditingClient(null);
+    }
+  }
+
+  function handleStartEdit(client: Client) {
+    setEditingClient(client);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function handleUpdateClient(updatedClient: Client) {
+    setClients((currentClients) =>
+      currentClients.map((client) =>
+        client.id === updatedClient.id ? updatedClient : client
+      )
+    );
+
+    setEditingClient(null);
+  }
+
+  function handleCancelEdit() {
+    setEditingClient(null);
   }
 
   return (
@@ -50,13 +74,19 @@ function App() {
 
       <DashboardCards clients={clients} />
 
-      <ClientForm onAddClient={handleAddClient} />
+      <ClientForm
+        onAddClient={handleAddClient}
+        editingClient={editingClient}
+        onUpdateClient={handleUpdateClient}
+        onCancelEdit={handleCancelEdit}
+      />
 
       <ClientList
         clients={filteredClients}
         filterStatus={filterStatus}
         onFilterStatusChange={setFilterStatus}
         onDeleteClient={handleDeleteClient}
+        onEditClient={handleStartEdit}
       />
     </main>
   );

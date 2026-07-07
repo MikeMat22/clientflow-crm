@@ -3,9 +3,14 @@ import type { Client } from "../types/client";
 type ClientCardProps = {
   client: Client;
   onDeleteClient: (clientId: string) => void;
+  onEditClient: (client: Client) => void;
 };
 
-export function ClientCard({ client, onDeleteClient }: ClientCardProps) {
+export function ClientCard({
+  client,
+  onDeleteClient,
+  onEditClient,
+}: ClientCardProps) {
   return (
     <article className="client-card">
       <h3>{client.companyName}</h3>
@@ -37,13 +42,23 @@ export function ClientCard({ client, onDeleteClient }: ClientCardProps) {
 
       <p>{client.notes}</p>
 
-      <button
-        className="delete-button"
-        type="button"
-        onClick={() => onDeleteClient(client.id)}
-      >
-        Delete
-      </button>
+      <div className="card-actions">
+        <button
+          className="edit-button"
+          type="button"
+          onClick={() => onEditClient(client)}
+        >
+          Edit
+        </button>
+
+        <button
+          className="delete-button"
+          type="button"
+          onClick={() => onDeleteClient(client.id)}
+        >
+          Delete
+        </button>
+      </div>
     </article>
   );
 }

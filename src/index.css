@@ -183,3 +183,28 @@ p {
   background: white;
   font: inherit;
 }
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.edit-button,
+.cancel-button {
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: #e0f2fe;
+  color: #075985;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.edit-button:hover,
+.cancel-button:hover {
+  background: #bae6fd;
+}
+
+.cancel-button {
+  grid-column: 1 / -1;
+}
