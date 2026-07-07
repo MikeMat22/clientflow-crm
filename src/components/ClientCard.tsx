@@ -6,7 +6,7 @@ type ClientCardProps = {
 
 export function ClientCard({ client }: ClientCardProps) {
   return (
-    <article>
+    <article className="client-card">
       <h3>{client.companyName}</h3>
 
       <p>
@@ -22,7 +22,8 @@ export function ClientCard({ client }: ClientCardProps) {
       </p>
 
       <p>
-        <strong>Status:</strong> {client.status}
+        <strong>Status:</strong>{" "}
+        <span className="status">{client.status}</span>
       </p>
 
       <p>

@@ -16,23 +16,23 @@ export function DashboardCards({ clients }: DashboardCardsProps) {
     <section>
       <h2>Dashboard</h2>
 
-      <div>
-        <div>
+      <div className="dashboard-grid">
+        <div className="dashboard-card">
           <p>Total Clients</p>
           <strong>{totalClients}</strong>
         </div>
 
-        <div>
+        <div className="dashboard-card">
           <p>Active Clients</p>
           <strong>{activeClients}</strong>
         </div>
 
-        <div>
+        <div className="dashboard-card">
           <p>Monthly Revenue</p>
           <strong>£{monthlyRevenue}</strong>
         </div>
 
-        <div>
+        <div className="dashboard-card">
           <p>Goal Progress</p>
           <strong>{activeClients} / 100</strong>
         </div>
