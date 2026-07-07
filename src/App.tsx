@@ -3,9 +3,11 @@ import { DashboardCards } from "./components/DashboardCards";
 import { ClientList } from "./components/ClientList";
 import { ClientForm } from "./components/ClientForm";
 import { mockClients } from "./data/mockClients";
-import type { Client } from "./types/client";
+import type { Client, ClientStatus } from "./types/client";
 
 const STORAGE_KEY = "clientflow-clients";
+
+type FilterStatus = "all" | ClientStatus;
 
 function App() {
   const [clients, setClients] = useState<Client[]>(() => {
@@ -17,6 +19,13 @@ function App() {
 
     return mockClients;
   });
+
+  const [filterStatus, setFilterStatus] = useState<FilterStatus>("all");
+
+  const filteredClients =
+    filterStatus === "all"
+      ? clients
+      : clients.filter((client) => client.status === filterStatus);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(clients));
@@ -40,8 +49,15 @@ function App() {
       </header>
 
       <DashboardCards clients={clients} />
+
       <ClientForm onAddClient={handleAddClient} />
-      <ClientList clients={clients} onDeleteClient={handleDeleteClient} />
+
+      <ClientList
+        clients={filteredClients}
+        filterStatus={filterStatus}
+        onFilterStatusChange={setFilterStatus}
+        onDeleteClient={handleDeleteClient}
+      />
     </main>
   );
 }
