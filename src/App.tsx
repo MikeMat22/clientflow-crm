@@ -1,5 +1,6 @@
 import { DashboardCards } from "./components/DashboardCards";
 import { mockClients } from "./data/mockClients";
+import { ClientList } from "./components/ClientList";
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <p>Simple CRM for service businesses and monthly clients.</p>
 
       <DashboardCards clients={mockClients} />
+      <ClientList clients={mockClients} />
     </main>
   );
 }
