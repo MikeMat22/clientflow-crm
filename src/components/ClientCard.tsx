@@ -2,9 +2,10 @@ import type { Client } from "../types/client";
 
 type ClientCardProps = {
   client: Client;
+  onDeleteClient: (clientId: string) => void;
 };
 
-export function ClientCard({ client }: ClientCardProps) {
+export function ClientCard({ client, onDeleteClient }: ClientCardProps) {
   return (
     <article className="client-card">
       <h3>{client.companyName}</h3>
@@ -35,6 +36,14 @@ export function ClientCard({ client }: ClientCardProps) {
       </p>
 
       <p>{client.notes}</p>
+
+      <button
+        className="delete-button"
+        type="button"
+        onClick={() => onDeleteClient(client.id)}
+      >
+        Delete
+      </button>
     </article>
   );
 }

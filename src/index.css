@@ -154,3 +154,17 @@ p {
     grid-template-columns: 1fr;
   }
 }
+.delete-button {
+  margin-top: 12px;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background: #fecaca;
+}

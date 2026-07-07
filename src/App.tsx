@@ -26,6 +26,12 @@ function App() {
     setClients((currentClients) => [newClient, ...currentClients]);
   }
 
+  function handleDeleteClient(clientId: string) {
+    setClients((currentClients) =>
+      currentClients.filter((client) => client.id !== clientId)
+    );
+  }
+
   return (
     <main>
       <header className="app-header">
@@ -35,7 +41,7 @@ function App() {
 
       <DashboardCards clients={clients} />
       <ClientForm onAddClient={handleAddClient} />
-      <ClientList clients={clients} />
+      <ClientList clients={clients} onDeleteClient={handleDeleteClient} />
     </main>
   );
 }
