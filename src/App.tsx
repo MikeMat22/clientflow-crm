@@ -47,13 +47,31 @@ function App() {
   }
 
   function handleDeleteClient(clientId: string) {
-    setClients((currentClients) =>
-      currentClients.filter((client) => client.id !== clientId)
-    );
 
-    if (editingClient?.id === clientId) {
-      setEditingClient(null);
+    const shouldDelete = window.confirm(
+  
+      "Are you sure you want to delete this client?"
+  
+    );
+  
+    if (!shouldDelete) {
+  
+      return;
+  
     }
+  
+    setClients((currentClients) =>
+  
+      currentClients.filter((client) => client.id !== clientId)
+  
+    );
+  
+    if (editingClient?.id === clientId) {
+  
+      setEditingClient(null);
+  
+    }
+  
   }
 
   function handleStartEdit(client: Client) {
