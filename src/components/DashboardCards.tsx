@@ -1,16 +1,13 @@
 import type { Client } from "../types/client";
+import { calculateClientStats } from "../utils/calculateClientStats";
 
 type DashboardCardsProps = {
   clients: Client[];
 };
 
 export function DashboardCards({ clients }: DashboardCardsProps) {
-  const totalClients = clients.length;
-  const activeClients = clients.filter((client) => client.status === "active").length;
-  const monthlyRevenue = clients.reduce(
-    (total, client) => total + client.monthlyValue,
-    0
-  );
+  const { totalClients, activeClients, monthlyRevenue, goalProgress } =
+    calculateClientStats(clients);
 
   return (
     <section>
@@ -34,7 +31,7 @@ export function DashboardCards({ clients }: DashboardCardsProps) {
 
         <div className="dashboard-card">
           <p>Goal Progress</p>
-          <strong>{activeClients} / 100</strong>
+          <strong>{goalProgress} / 100</strong>
         </div>
       </div>
     </section>
