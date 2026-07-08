@@ -1,4 +1,5 @@
 import type { Client } from "../types/client";
+import { StatusBadge } from "./StatusBadge";
 
 type ClientCardProps = {
   client: Client;
@@ -28,8 +29,7 @@ export function ClientCard({
       </p>
 
       <p>
-        <strong>Status:</strong>{" "}
-        <span className="status">{client.status}</span>
+        <strong>Status:</strong> <StatusBadge status={client.status} />
       </p>
 
       <p>
