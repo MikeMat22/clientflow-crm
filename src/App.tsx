@@ -21,12 +21,22 @@ function App() {
   });
 
   const [filterStatus, setFilterStatus] = useState<FilterStatus>("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [editingClient, setEditingClient] = useState<Client | null>(null);
 
-  const filteredClients =
-    filterStatus === "all"
-      ? clients
-      : clients.filter((client) => client.status === filterStatus);
+  const filteredClients = clients.filter((client) => {
+    const matchesStatus =
+      filterStatus === "all" || client.status === filterStatus;
+
+    const searchText = searchQuery.toLowerCase();
+
+    const matchesSearch =
+      client.companyName.toLowerCase().includes(searchText) ||
+      client.contactName.toLowerCase().includes(searchText) ||
+      client.email.toLowerCase().includes(searchText);
+
+    return matchesStatus && matchesSearch;
+  });
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(clients));
@@ -85,6 +95,8 @@ function App() {
         clients={filteredClients}
         filterStatus={filterStatus}
         onFilterStatusChange={setFilterStatus}
+        searchQuery={searchQuery}
+        onSearchQueryChange={setSearchQuery}
         onDeleteClient={handleDeleteClient}
         onEditClient={handleStartEdit}
       />
