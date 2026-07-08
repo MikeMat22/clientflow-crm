@@ -1,5 +1,6 @@
 import type { Client } from "../types/client";
 import { calculateClientStats } from "../utils/calculateClientStats";
+import { formatCurrency } from "../utils/formatCurrency";
 
 type DashboardCardsProps = {
   clients: Client[];
@@ -26,7 +27,7 @@ export function DashboardCards({ clients }: DashboardCardsProps) {
 
         <div className="dashboard-card">
           <p>Monthly Revenue</p>
-          <strong>£{monthlyRevenue}</strong>
+          <strong>{formatCurrency(monthlyRevenue)}</strong>
         </div>
 
         <div className="dashboard-card">

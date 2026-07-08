@@ -1,4 +1,5 @@
 import type { Client } from "../types/client";
+import { formatCurrency } from "../utils/formatCurrency";
 import { StatusBadge } from "./StatusBadge";
 
 type ClientCardProps = {
@@ -33,7 +34,7 @@ export function ClientCard({
       </p>
 
       <p>
-        <strong>Monthly Value:</strong> £{client.monthlyValue}
+        <strong>Monthly Value:</strong> {formatCurrency(client.monthlyValue)}
       </p>
 
       <p>
